@@ -25,7 +25,7 @@ def get_job_host(ssh):
 def get_primary_ssh():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect('tools-dev.wmflabs.org', username=labs_config['user'], key_filename=labs_config['identityfile'])
+    ssh.connect('tools-dev.wmflabs.org', username=labs_config['user'])
     return ssh
 
 

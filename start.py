@@ -30,8 +30,8 @@ def get_primary_ssh():
 
 
 def start_notebook(ssh):
-    # Setup the server!
-    _, out, _ = ssh.exec_command('bash -e setup.bash')
+    # Setup the local notebook environment!
+    _, out, _ = ssh.exec_command('bash -e /data/project/notebooks/env/setup.bash')
     print out.read()
 
     # Check if job already exists, if so, reuse!
@@ -41,7 +41,7 @@ def start_notebook(ssh):
         return host
 
     # Start the server!
-    _, stdout, _ = ssh.exec_command('jsub -mem 4g run.bash')
+    _, stdout, _ = ssh.exec_command('jsub -mem 4g /data/project/notebooks/env/start.bash')
     jsub_output = stdout.read()
 
     job_num, job_name = JSUB_OUTPUT_REGEX.match(jsub_output).groups()

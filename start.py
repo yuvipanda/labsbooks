@@ -63,10 +63,10 @@ def get_exec_ssh(host):
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     proxy = paramiko.ProxyCommand('ssh -e none tools-dev.wmflabs.org exec nc -w 3600 %s 22' % host)
+    username = labs_config.get('user', getpass.getuser())
     ssh.connect(
         host,
-        username=labs_config['user'],
-        key_filename=labs_config['identityfile'],
+        username=username,
         sock=proxy
     )
     forward_tunnel(9500, 'localhost', 9000, ssh.get_transport())

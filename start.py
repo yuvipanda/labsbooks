@@ -1,6 +1,7 @@
 import time
 import os
 import re
+import getpass
 import xml.etree.ElementTree as ET
 
 import paramiko
@@ -25,7 +26,8 @@ def get_job_host(ssh):
 def get_primary_ssh():
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect('tools-dev.wmflabs.org', username=labs_config['user'])
+    username = labs_config.get('user', getpass.getuser())
+    ssh.connect('tools-dev.wmflabs.org', username=username)
     return ssh
 
 

@@ -1,0 +1,4 @@
+REDIS_HOST: localhost
+REDIS_DB: 7
+REDIS_PREFIX: lalalalatestprefix
+REDIS_EXPIRY_SECONDS: 86400

@@ -73,12 +73,12 @@ class Handler (SocketServer.BaseRequestHandler):
         while True:
             r, w, x = select.select([self.request, chan], [], [])
             if self.request in r:
-                data = self.request.recv(16 * 1024)
+                data = self.request.recv(256 * 1024)
                 if len(data) == 0:
                     break
                 chan.send(data)
             if chan in r:
-                data = chan.recv(16 * 1024)
+                data = chan.recv(256 * 1024)
                 if len(data) == 0:
                     break
                 self.request.send(data)

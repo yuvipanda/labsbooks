@@ -60,16 +60,8 @@ def start_notebook(ssh):
             time.sleep(2)
 
 def get_exec_ssh(host):
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    proxy = paramiko.ProxyCommand('ssh -e none tools-dev.wmflabs.org exec nc -w 3600 %s 22' % host)
-    username = labs_config.get('user', getpass.getuser())
-    ssh.connect(
-        host,
-        username=username,
-        sock=proxy
-    )
-    forward_tunnel(9500, 'localhost', 9000, ssh.get_transport())
+    parent_ssh = get_primary_ssh()
+    forward_tunnel(9500, host, 9000, parent_ssh.get_transport())
 
 ssh = get_primary_ssh()
 host = start_notebook(ssh)
